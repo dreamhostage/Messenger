@@ -17,6 +17,13 @@ TEMPLATE = app
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
+INCLUDEPATH += "C:/libs/boost"
+LIBS += "C:/libs/boost/stage/lib/libboost_date_time-vc142-mt-gd-x64-1_70.lib"
+LIBS += "C:/libs/boost/stage/lib/libboost_regex-vc142-mt-gd-x64-1_70.lib"
+
+LIBS += "C:/libs/boost/stage/lib/libboost_date_time-vc142-mt-x64-1_70.lib"
+LIBS += "C:/libs/boost/stage/lib/libboost_regex-vc142-mt-x64-1_70.lib"
+
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
@@ -38,3 +45,12 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+
+win32: LIBS += -L$$PWD/../x64/Release/ -lRemoteInterceptionServerLib
+
+INCLUDEPATH += $$PWD/RemoteInterceptionServerLib
+DEPENDPATH += $$PWD/RemoteInterceptionServerLib
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../x64/Release/RemoteInterceptionServerLib.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../x64/Release/libRemoteInterceptionServerLib.a

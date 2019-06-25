@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "RemoteInterceptionServerLib.h"
+#include "ui_mainwindow.h"
 
 namespace Ui {
 class MainWindow;
