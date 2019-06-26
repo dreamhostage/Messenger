@@ -1,42 +1,23 @@
-﻿#include <iostream>
+﻿#define _WINSOCK_DEPRECATED_NO_WARNINGS
+#include <iostream>
+#include <winsock2.h>
 #include "gtest/gtest.h"
 #include <gmock/gmock.h>
 #include <Windows.h>
 #include <sys/types.h>
 #include <string>
 
-
 #pragma comment (lib, "gtestd.lib")
 #pragma comment (lib, "gmockd.lib")
 #pragma comment (lib, "Ws2_32.lib")
 
-class server
-{
 
-public:
 
-	virtual void start()
-	{
-		
-	}
-};
-
-class client
-{
-
-public:
-
-	virtual void start()
-	{
-
-	}
-};
-
-class mockserver : public server
+class mockserver
 {
 	WSADATA WsaData;
 	SOCKET sMain;
-	server mockSer;
+
 public:
 	mockserver()
 	{
@@ -71,10 +52,14 @@ public:
 			message[i] = mes[i];
 		message[i] = '\0';
 
+		WSABUF lpBuffers;
+		lpBuffers.buf = message;
+		lpBuffers.len = 256;
+
 		while (n)
 		{
-
-			send(sMain, message, 256, 0);
+			send();
+			WSASend(sMain, &lpBuffers, 1, NULL, NULL, NULL, NULL);
 			std::cout << message << std::endl;
 			Sleep(5000);
 			--n;
@@ -82,14 +67,15 @@ public:
 	}
 
 	MOCK_CONST_METHOD0(start, void());
-	
+	MOCK_CONST_METHOD0(send, void());
+
 };
 
-class mockclient : public client
+class mockclient
 {
 	WSADATA WsaData;
 	SOCKET s;
-	client mockCl;
+
 public:
 	mockclient()
 	{
@@ -98,6 +84,7 @@ public:
 
 	void startengine()
 	{
+		Sleep(1000);
 		int n = 5;
 		start();
 		WSAStartup(0x0101, &WsaData);
@@ -114,6 +101,7 @@ public:
 		else
 		{
 			std::cout << "Server is offline...\n";
+			system("pause");
 			return;
 		}
 
@@ -124,16 +112,22 @@ public:
 			message[i] = mes[i];
 		message[i] = '\0';
 
+		WSABUF lpBuffers;
+		lpBuffers.buf = message;
+		lpBuffers.len = 256;
+
 		while (n)
 		{
 			Sleep(3000);
-			send(s, message, 256, 0);
+			send();
+			WSASend(s, &lpBuffers, 1, NULL, NULL, NULL, NULL);
 			std::cout << message << std::endl;
 			--n;
 		}
 	}
 
 	MOCK_CONST_METHOD0(start, void());
+	MOCK_CONST_METHOD0(send, void());
 
 };
 
@@ -151,17 +145,28 @@ TEST(Engine_TEST, startup)
 
 	EXPECT_CALL(mServer, start());
 	EXPECT_CALL(mClient, start());
-
+	EXPECT_CALL(mServer, send()).Times(5);
+	EXPECT_CALL(mClient, send()).Times(5);
 
 	HANDLE hThread = CreateThread(NULL, 0, clientThread, &mClient, 0, NULL);
+
 	mServer.startengine();
+	WaitForSingleObject(hThread, INFINITE);
 }
 
 int main()
 {
-	LoadLibraryA("C:\\GitHub\\myMessengerHookDll\\x64\\Debug\\myMessengerHookDll.dll");
-	system("pause");
+	if (!LoadLibraryA("C:\\GitHub\\Messenger\\x64\\Debug\\HookDLL.dll"))
+	{
+		return 0;
+	}
+
 	testing::InitGoogleMock();
 
-	return RUN_ALL_TESTS();
+	RUN_ALL_TESTS();
+
+	system("pause");
+
+	return 0;
 }
+
