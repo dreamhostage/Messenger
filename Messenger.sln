@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleServer", "Intercepti
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyMesEngineLib", "myMessenger\myMesEngineLib\ChatLib\ChatLib.vcxproj", "{476F1806-13E3-4AD3-A9B7-EF67F019A52E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemoteInterceptionServerLib", "RemoteInterceptionServerGui\RemoteInterceptionServerLib\RemoteInterceptionServerLib.vcxproj", "{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{476F1806-13E3-4AD3-A9B7-EF67F019A52E}.Release|x64.Build.0 = Release|x64
 		{476F1806-13E3-4AD3-A9B7-EF67F019A52E}.Release|x86.ActiveCfg = Release|Win32
 		{476F1806-13E3-4AD3-A9B7-EF67F019A52E}.Release|x86.Build.0 = Release|Win32
+		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|x64.ActiveCfg = Debug|x64
+		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|x64.Build.0 = Debug|x64
+		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|x86.ActiveCfg = Debug|Win32
+		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|x86.Build.0 = Debug|Win32
+		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|x64.ActiveCfg = Release|x64
+		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|x64.Build.0 = Release|x64
+		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|x86.ActiveCfg = Release|Win32
+		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
