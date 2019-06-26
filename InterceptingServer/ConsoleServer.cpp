@@ -1,86 +1,94 @@
 ﻿#include <iostream>
 #include <Windows.h>
-#include <sys/types.h>
 #include <string>
 
-#pragma warning( disable : 4996)
-#pragma comment(lib, "Ws2_32.lib")
+bool change;
+char changedMessage[256];
 
-SOCKET sMain;
-
-DWORD WINAPI monitoring(PVOID param)
+DWORD WINAPI ReadingThread(PVOID p)
 {
-	do
+	HANDLE* hServer = static_cast<HANDLE*>(p);
+	char message[256];
+	char temp[] = { "!@#$%^&*()" };                           // MAY BE ERROR!!!!!!
+	char changed[256];
+	int i = 0;
+	while (temp[i])
+		changed[i] = temp[i++];
+	changed[i] = '\0';
+
+	while (true)
 	{
-		fd_set s_set = { 1, {sMain} };
-		timeval timeout = { 0, 0 };
-		int select_res = select(0, &s_set, 0, 0, &timeout);
-		if (select_res == SOCKET_ERROR) return -1;
-		if (select_res)
+		ConnectNamedPipe(*hServer, NULL);
+
+		ReadFile(*hServer, message, 256, NULL, NULL);
+		std::cout << message << "\n";
+
+		if (change)
 		{
-			char mes[256];
 
-			SOCKADDR_IN newSin;
+			if(WriteFile(*hServer, changed, 256, NULL, NULL));
 
-			int fromlen = sizeof(newSin);
+			if(WriteFile(*hServer, changedMessage, 256, NULL, NULL));
 
-			SOCKET client = accept(sMain, (struct sockaddr*) & newSin, &fromlen);
-
-			if (client != INVALID_SOCKET)
-			{
-				std::string ad = inet_ntoa(newSin.sin_addr);
-				recv(client, mes, 256, 0);
-				std::string message = "[" + ad + "]: " + mes;
-				std::cout << message << std::endl;
-			}
 		}
 
-	} while (1);
-}
+		if (WriteFile(*hServer, changedMessage, 256, NULL, NULL));
 
+		DisconnectNamedPipe(*hServer);
+	}
+
+	return 0;
+}
 
 int main()
 {
-	//WSA creating:
-	//////////////////////////////////////////////////////////////////
-	WSADATA WsaData;
-	int err = WSAStartup(0x0101, &WsaData);
-	if (err == SOCKET_ERROR)
+	change = FALSE;
+	std::string choise;
+	std::string PipeServerName = "\\\\.\\pipe\\ConsoleServer";
+	std::string PipeDllName = "\\\\.\\pipe\\HookDll";
+	std::string created = "***********************\n|Server started|\n***********************\n\n";
+	char message[256];
+
+	HANDLE hServer = CreateNamedPipeA(&PipeServerName[0],
+		PIPE_ACCESS_DUPLEX,
+		PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
+		PIPE_UNLIMITED_INSTANCES,
+		256, 256, 5000, NULL);
+
+	if (hServer == INVALID_HANDLE_VALUE)
 	{
-		printf("WSAStartup() failed: %ld\n", GetLastError());
-		return 1;
+		int error = GetLastError();
+		std::cout << "Error creating server...\n\n";
+		return error;
 	}
-	//////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////
-
-	//s creating:
-	//////////////////////////////////////////////////////////////////
-	sMain = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-	if (sMain == -1)
-		std::cout << "Error creating MAIN socket\n";
 	else
-		std::cout << "Main socket was created!\n";
+		std::cout << created;
 
-	SOCKADDR_IN sin;
-	sin.sin_family = AF_INET;
-	sin.sin_port = htons(90);
-	sin.sin_addr.s_addr = INADDR_ANY;
+	std::cout << "Waiting for client connections...\n\n";
 
-	if (!bind(sMain, (LPSOCKADDR)& sin, sizeof(sin)))
-		std::cout << "Successful BIND!\n";
+	HANDLE hReadingThread = CreateThread(NULL, 0, ReadingThread, &hServer, 0, 0);
 
-	if (!listen(sMain, SOMAXCONN))
-		std::cout << "Successful listening\n";
+	while (true)
+	{
+		std::cout << "1 - start changing messages\n";
+		std::cout << "2 - stop changing messages\n\n";
+		std::getline(std::cin, choise);
+		if (choise[0] == '1')
+		{
+			change = true;
+			gets_s(changedMessage);
+		}
+		if (choise[0] == '2')
+		{
+			change = FALSE;
+		}
+	}
 
-	std::cout << "Waiting for clients...\n\n";
+	/*
+	HANDLE rFile = CreateFileA(&PipeDllName[0], GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (rFile == INVALID_HANDLE_VALUE)
+		std::cout << "Error DLL answer chanel!\n";
+	*/
 
-	//////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////////////////////////////
-
-	HANDLE hMon = CreateThread(NULL, 0, monitoring, NULL, 0, NULL);
-	WaitForSingleObject(hMon, INFINITE);
-
-	CloseHandle(hMon);
-	closesocket(sMain);
+	CloseHandle(hServer);
 }
