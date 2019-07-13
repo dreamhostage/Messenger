@@ -33,13 +33,16 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        message.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        message.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        message.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -47,10 +50,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-win32: LIBS += -L$$PWD/../x64/Release/ -lRemoteInterceptionServerLib
 
-INCLUDEPATH += $$PWD/RemoteInterceptionServerLib
-DEPENDPATH += $$PWD/RemoteInterceptionServerLib
 
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../x64/Release/RemoteInterceptionServerLib.lib
-else:win32-g++: PRE_TARGETDEPS += $$PWD/../x64/Release/libRemoteInterceptionServerLib.a
+win32: LIBS += -L$$PWD/../x64/Release/ -lInterceptingServerLibrary
+
+INCLUDEPATH += $$PWD/../InterceptingServerLibrary
+DEPENDPATH += $$PWD/../InterceptingServerLibrary
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../x64/Release/InterceptingServerLibrary.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../x64/Release/libInterceptingServerLibrary.a
