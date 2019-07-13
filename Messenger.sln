@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HookDLLTest", "HookDLLTest\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InterceptingServer", "InterceptingServer\ConsoleServer.vcxproj", "{4FB69F7B-50B5-4464-836F-AF0A10AEBFA4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemoteInterceptionServerLib", "RemoteInterceptionServerGui\RemoteInterceptionServerLib\RemoteInterceptionServerLib.vcxproj", "{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "myMessengerLib", "myMessengerLib\ChatLib\ChatLib.vcxproj", "{476F1806-13E3-4AD3-A9B7-EF67F019A52E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "InjectDriver", "InjectDriver\InjectDriver.vcxproj", "{30AFF05A-C204-4B0D-A8AB-112DEE9A473A}"
@@ -67,18 +65,6 @@ Global
 		{4FB69F7B-50B5-4464-836F-AF0A10AEBFA4}.Release|x64.Build.0 = Release|x64
 		{4FB69F7B-50B5-4464-836F-AF0A10AEBFA4}.Release|x86.ActiveCfg = Release|Win32
 		{4FB69F7B-50B5-4464-836F-AF0A10AEBFA4}.Release|x86.Build.0 = Release|Win32
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|ARM.ActiveCfg = Debug|Win32
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|ARM64.ActiveCfg = Debug|Win32
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|x64.ActiveCfg = Debug|x64
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|x64.Build.0 = Debug|x64
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|x86.ActiveCfg = Debug|Win32
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Debug|x86.Build.0 = Debug|Win32
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|ARM.ActiveCfg = Release|Win32
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|ARM64.ActiveCfg = Release|Win32
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|x64.ActiveCfg = Release|x64
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|x64.Build.0 = Release|x64
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|x86.ActiveCfg = Release|Win32
-		{D307DE5A-DAE5-4060-B1EA-FEF9C5788B61}.Release|x86.Build.0 = Release|Win32
 		{476F1806-13E3-4AD3-A9B7-EF67F019A52E}.Debug|ARM.ActiveCfg = Debug|Win32
 		{476F1806-13E3-4AD3-A9B7-EF67F019A52E}.Debug|ARM64.ActiveCfg = Debug|Win32
 		{476F1806-13E3-4AD3-A9B7-EF67F019A52E}.Debug|x64.ActiveCfg = Debug|x64
