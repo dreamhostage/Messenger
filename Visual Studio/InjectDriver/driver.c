@@ -20,6 +20,7 @@
 #define INVALID_HANDLE_VALUE 0xFFFFFFFF
 #endif
 
+
 /*exec calc.exe*/
 char *shellcode = NULL;
 
