@@ -23,6 +23,8 @@
 /*exec calc.exe*/
 char *shellcode = NULL;
 
+
+
 /*
 void LoadDll()
 {
@@ -42,6 +44,8 @@ void LoadDll()
 	NtReadFile(hDLL, NULL, NULL, NULL, &ioStatusBlock, shellcode, size, 0, NULL);
 }
 */
+
+
 
 typedef VOID(NTAPI* PKNORMAL_ROUTINE)(
 	_In_ PVOID NormalContext,
