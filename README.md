@@ -1,5 +1,5 @@
-  This project contains simple messenger with GUI on QT which engine was written on boost/asio. Also there is GUI server, hooking dynamic library file (written by mhook library) and Windows service.
-Here is the principles how does all this work:
+  This project contains simple messenger with GUI on QT which engine was written on boost/asio. Also there are GUI server, hooking dynamic library file (written by mhook library) and Windows service.
+Here are the principles of how it all works:
 
 - Messenger connects users between themselves;
 - Dll attaches into the messenger;
